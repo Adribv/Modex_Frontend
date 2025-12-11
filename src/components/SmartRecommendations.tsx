@@ -21,12 +21,11 @@ function SmartRecommendations() {
   const loadRecommendations = async () => {
     try {
       setLoading(true);
-      const [doctors, allSlots] = await Promise.all([
-        api.getDoctors(),
-        Promise.all(doctors.map((d) => api.getDoctorSlots(d._id).catch(() => []))).then((arrays) =>
-          arrays.flat()
-        ),
-      ]);
+      const doctors = await api.getDoctors();
+      const allSlotsArrays = await Promise.all(
+        doctors.map((d: Doctor) => api.getDoctorSlots(d._id).catch(() => []))
+      );
+      const allSlots = allSlotsArrays.flat();
 
       // Smart recommendation algorithm
       const now = new Date();
@@ -34,7 +33,7 @@ function SmartRecommendations() {
 
       allSlots.forEach((slot) => {
         const slotDate = new Date(slot.startTime);
-        const doctor = doctors.find((d) => d._id === slot.doctorId);
+        const doctor = doctors.find((d: Doctor) => d._id === slot.doctorId);
 
         if (!doctor || slot.availableSeats === 0) return;
 
@@ -73,7 +72,7 @@ function SmartRecommendations() {
         }
 
         // Factor 5: Doctor specialty diversity (if multiple specialties)
-        const specialtyCount = new Set(doctors.map((d) => d.specialty)).size;
+        const specialtyCount = new Set(doctors.map((d: Doctor) => d.specialty)).size;
         if (specialtyCount > 1) {
           score += 10;
         }
