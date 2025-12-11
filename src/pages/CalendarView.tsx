@@ -40,10 +40,10 @@ function CalendarView() {
   const loadSlots = async () => {
     try {
       let slots: Slot[] = [];
-      
+
       if (selectedDoctor === 'all') {
         // Load slots for all doctors
-        const allSlotsPromises = doctors.map(doctor => 
+        const allSlotsPromises = doctors.map((doctor) =>
           api.getDoctorSlots(doctor._id).catch(() => [])
         );
         const allSlotsArrays = await Promise.all(allSlotsPromises);
@@ -68,13 +68,13 @@ function CalendarView() {
       }
 
       const filteredSlots = slots
-        .filter(slot => {
+        .filter((slot) => {
           const slotDate = new Date(slot.startTime);
           return slotDate >= startOfPeriod && slotDate < endOfPeriod;
         })
-        .map(slot => {
+        .map((slot) => {
           const slotDate = new Date(slot.startTime);
-          const doctor = doctors.find(d => d._id === slot.doctorId);
+          const doctor = doctors.find((d) => d._id === slot.doctorId);
           return {
             ...slot,
             doctor,
@@ -113,11 +113,10 @@ function CalendarView() {
 
   const getSlotsForDay = (day: Date) => {
     const dayNum = viewMode === 'week' ? day.getDay() : day.getDate();
-    return allSlots.filter(slot => {
+    return allSlots.filter((slot) => {
       const slotDate = new Date(slot.startTime);
       if (viewMode === 'week') {
-        return slot.day === dayNum && 
-               slotDate.toDateString() === day.toDateString();
+        return slot.day === dayNum && slotDate.toDateString() === day.toDateString();
       } else {
         return slot.day === dayNum;
       }
@@ -125,7 +124,7 @@ function CalendarView() {
   };
 
   const getHourSlots = (hour: number, day: Date) => {
-    return getSlotsForDay(day).filter(slot => slot.hour === hour);
+    return getSlotsForDay(day).filter((slot) => slot.hour === hour);
   };
 
   const formatTime = (hour: number) => {
@@ -133,10 +132,10 @@ function CalendarView() {
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'short', 
-      month: 'short', 
-      day: 'numeric' 
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
     });
   };
 
@@ -164,16 +163,15 @@ function CalendarView() {
             ← Previous
           </button>
           <h2 className="calendar-title">
-            {viewMode === 'week' 
+            {viewMode === 'week'
               ? `Week of ${formatDate(getDaysArray()[0])}`
-              : selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
-            }
+              : selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </h2>
           <button className="btn btn-secondary" onClick={() => navigateDate('next')}>
             Next →
           </button>
         </div>
-        
+
         <div className="calendar-filters">
           <select
             value={selectedDoctor}
@@ -181,13 +179,13 @@ function CalendarView() {
             className="filter-select"
           >
             <option value="all">All Doctors</option>
-            {doctors.map(doctor => (
+            {doctors.map((doctor) => (
               <option key={doctor._id} value={doctor._id}>
                 {doctor.name}
               </option>
             ))}
           </select>
-          
+
           <div className="view-mode-toggle">
             <button
               className={`view-mode-btn ${viewMode === 'week' ? 'active' : ''}`}
@@ -210,7 +208,7 @@ function CalendarView() {
           {/* Time column */}
           <div className="time-column">
             <div className="time-header">Time</div>
-            {hours.map(hour => (
+            {hours.map((hour) => (
               <div key={hour} className="time-slot">
                 {formatTime(hour)}
               </div>
@@ -221,18 +219,18 @@ function CalendarView() {
           {getDaysArray().map((day, dayIndex) => (
             <div key={dayIndex} className="day-column">
               <div className="day-header">
-                <div className="day-name">{day.toLocaleDateString('en-US', { weekday: 'short' })}</div>
-                <div className="day-date">{day.getDate()}</div>
-                <div className="day-slots-count">
-                  {getSlotsForDay(day).length} slots
+                <div className="day-name">
+                  {day.toLocaleDateString('en-US', { weekday: 'short' })}
                 </div>
+                <div className="day-date">{day.getDate()}</div>
+                <div className="day-slots-count">{getSlotsForDay(day).length} slots</div>
               </div>
-              
-              {hours.map(hour => {
+
+              {hours.map((hour) => {
                 const hourSlots = getHourSlots(hour, day);
                 return (
                   <div key={hour} className="hour-cell">
-                    {hourSlots.map(slot => (
+                    {hourSlots.map((slot) => (
                       <div
                         key={slot._id}
                         className={`calendar-slot ${slot.availableSeats > 0 ? 'available' : 'full'}`}
@@ -240,22 +238,20 @@ function CalendarView() {
                         title={`${slot.doctor?.name || 'Unknown'} - ${new Date(slot.startTime).toLocaleTimeString()}`}
                       >
                         <div className="slot-time">
-                          {new Date(slot.startTime).toLocaleTimeString('en-US', { 
-                            hour: '2-digit', 
-                            minute: '2-digit' 
+                          {new Date(slot.startTime).toLocaleTimeString('en-US', {
+                            hour: '2-digit',
+                            minute: '2-digit',
                           })}
                         </div>
-                        <div className="slot-doctor">
-                          {slot.doctor?.name || 'Unknown'}
-                        </div>
+                        <div className="slot-doctor">{slot.doctor?.name || 'Unknown'}</div>
                         <div className="slot-seats">
-                          <span className={`seat-indicator ${slot.availableSeats > 0 ? 'available' : 'full'}`}>
+                          <span
+                            className={`seat-indicator ${slot.availableSeats > 0 ? 'available' : 'full'}`}
+                          >
                             {slot.availableSeats} / {slot.totalSeats}
                           </span>
                         </div>
-                        {slot.availableSeats > 0 && (
-                          <div className="slot-badge">Book</div>
-                        )}
+                        {slot.availableSeats > 0 && <div className="slot-badge">Book</div>}
                       </div>
                     ))}
                   </div>
@@ -285,4 +281,3 @@ function CalendarView() {
 }
 
 export default CalendarView;
-

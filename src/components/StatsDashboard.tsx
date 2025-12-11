@@ -26,16 +26,10 @@ function StatsDashboard() {
 
   const loadStats = async () => {
     try {
-      const [doctors, adminSlots] = await Promise.all([
-        api.getDoctors(),
-        api.getAdminSlots(),
-      ]);
+      const [doctors, adminSlots] = await Promise.all([api.getDoctors(), api.getAdminSlots()]);
 
       const totalSlots = adminSlots.total;
-      const availableSlots = adminSlots.slots.reduce(
-        (sum, slot) => sum + slot.availableSeats,
-        0
-      );
+      const availableSlots = adminSlots.slots.reduce((sum, slot) => sum + slot.availableSeats, 0);
 
       setStats({
         totalDoctors: doctors.length,
@@ -77,4 +71,3 @@ function StatsDashboard() {
 }
 
 export default StatsDashboard;
-

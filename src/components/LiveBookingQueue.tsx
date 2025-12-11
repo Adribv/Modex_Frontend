@@ -18,7 +18,7 @@ function LiveBookingQueue({ slotId }: { slotId: string }) {
     const simulateQueue = () => {
       const actions: ('viewing' | 'booking')[] = ['viewing', 'booking'];
       const names = ['User A', 'User B', 'User C', 'User D'];
-      
+
       const newItem: QueueItem = {
         id: Math.random().toString(36).substr(2, 9),
         slotId,
@@ -51,14 +51,12 @@ function LiveBookingQueue({ slotId }: { slotId: string }) {
         <span>Live Activity ({queue.length})</span>
         <span className="queue-toggle">{isVisible ? '▼' : '▶'}</span>
       </div>
-      
+
       {isVisible && (
         <div className="queue-items">
           {queue.map((item) => (
             <div key={item.id} className="queue-item">
-              <div className="queue-avatar">
-                {item.userName.charAt(0)}
-              </div>
+              <div className="queue-avatar">{item.userName.charAt(0)}</div>
               <div className="queue-info">
                 <div className="queue-user">{item.userName}</div>
                 <div className="queue-action">
@@ -77,4 +75,3 @@ function LiveBookingQueue({ slotId }: { slotId: string }) {
 }
 
 export default LiveBookingQueue;
-

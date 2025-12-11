@@ -64,8 +64,7 @@ function Booking() {
       setSuccess(true);
       setBookingId(booking._id);
     } catch (err: any) {
-      const errorMessage =
-        err.response?.data?.error?.message || 'Failed to create booking';
+      const errorMessage = err.response?.data?.error?.message || 'Failed to create booking';
       setError(errorMessage);
     } finally {
       setSubmitting(false);
@@ -102,10 +101,25 @@ function Booking() {
             Your appointment has been successfully booked!
           </p>
           <p style={{ fontSize: '0.875rem' }}>
-            <strong>Booking ID:</strong> <code style={{ background: 'var(--bg-secondary)', padding: '0.25rem 0.5rem', borderRadius: '4px', color: 'var(--accent)', fontFamily: 'monospace' }}>{bookingId}</code>
+            <strong>Booking ID:</strong>{' '}
+            <code
+              style={{
+                background: 'var(--bg-secondary)',
+                padding: '0.25rem 0.5rem',
+                borderRadius: '4px',
+                color: 'var(--accent)',
+                fontFamily: 'monospace',
+              }}
+            >
+              {bookingId}
+            </code>
           </p>
         </div>
-        <button className="btn btn-success" onClick={() => navigate('/')} style={{ marginTop: '2rem', width: '100%' }}>
+        <button
+          className="btn btn-success"
+          onClick={() => navigate('/')}
+          style={{ marginTop: '2rem', width: '100%' }}
+        >
           Back to Home
         </button>
       </div>
@@ -114,20 +128,42 @@ function Booking() {
 
   return (
     <div>
-      <button className="btn btn-secondary" onClick={() => navigate('/')} style={{ marginBottom: '1.5rem' }}>
+      <button
+        className="btn btn-secondary"
+        onClick={() => navigate('/')}
+        style={{ marginBottom: '1.5rem' }}
+      >
         ← Back
       </button>
 
       <div className="card" style={{ maxWidth: '600px', margin: '0 auto' }}>
         <h2>Book Appointment</h2>
-        
+
         {slotId && <LiveBookingQueue slotId={slotId} />}
-        
-        <div style={{ marginBottom: '2rem', padding: '1.5rem', background: 'var(--bg-secondary)', borderRadius: '8px', border: '1px solid var(--border)' }}>
-          <p style={{ marginBottom: '0.75rem', fontSize: '0.875rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+
+        <div
+          style={{
+            marginBottom: '2rem',
+            padding: '1.5rem',
+            background: 'var(--bg-secondary)',
+            borderRadius: '8px',
+            border: '1px solid var(--border)',
+          }}
+        >
+          <p
+            style={{
+              marginBottom: '0.75rem',
+              fontSize: '0.875rem',
+              color: 'var(--text-muted)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.5px',
+            }}
+          >
             Appointment Details
           </p>
-          <p style={{ marginBottom: '0.5rem', fontSize: '0.9375rem', color: 'var(--text-primary)' }}>
+          <p
+            style={{ marginBottom: '0.5rem', fontSize: '0.9375rem', color: 'var(--text-primary)' }}
+          >
             <strong>Date & Time:</strong> {formatDate(slot.startTime)} -{' '}
             {new Date(slot.endTime).toLocaleTimeString('en-US', {
               hour: '2-digit',
@@ -135,12 +171,10 @@ function Booking() {
             })}
           </p>
           <p style={{ marginTop: '0.75rem' }}>
-            <strong style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>Seats Available:</strong>{' '}
-            <span
-              className={`badge ${
-                slot.availableSeats > 0 ? 'badge-success' : 'badge-danger'
-              }`}
-            >
+            <strong style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+              Seats Available:
+            </strong>{' '}
+            <span className={`badge ${slot.availableSeats > 0 ? 'badge-success' : 'badge-danger'}`}>
               {slot.availableSeats} / {slot.totalSeats}
             </span>
           </p>
@@ -158,9 +192,7 @@ function Booking() {
                 type="text"
                 id="name"
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
                 placeholder="Enter patient full name"
               />
@@ -172,9 +204,7 @@ function Booking() {
                 type="email"
                 id="email"
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 placeholder="patient@example.com"
               />
             </div>
@@ -185,9 +215,7 @@ function Booking() {
                 type="tel"
                 id="phone"
                 value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 placeholder="+1234567890"
               />
             </div>
@@ -210,4 +238,3 @@ function Booking() {
 }
 
 export default Booking;
-

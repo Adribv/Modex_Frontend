@@ -19,13 +19,17 @@ npm install
 
 ### Environment Variables
 
-Create a `.env` file in the `frontend` directory:
+Create a `.env` file in the `frontend` directory (optional):
 
 ```env
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=https://modex-backend-neb9.onrender.com
 ```
 
-For production, set this to your deployed API URL.
+**Note**: 
+- If `VITE_API_URL` is not set, the frontend will automatically use:
+  - `https://modex-backend-neb9.onrender.com` in production builds
+  - `http://localhost:3000` in development mode
+- This ensures the frontend works both locally and when deployed
 
 ### Development
 

@@ -23,8 +23,8 @@ function SmartRecommendations() {
       setLoading(true);
       const [doctors, allSlots] = await Promise.all([
         api.getDoctors(),
-        Promise.all(doctors.map(d => api.getDoctorSlots(d._id).catch(() => []))).then(
-          arrays => arrays.flat()
+        Promise.all(doctors.map((d) => api.getDoctorSlots(d._id).catch(() => []))).then((arrays) =>
+          arrays.flat()
         ),
       ]);
 
@@ -32,10 +32,10 @@ function SmartRecommendations() {
       const now = new Date();
       const recommendations: Recommendation[] = [];
 
-      allSlots.forEach(slot => {
+      allSlots.forEach((slot) => {
         const slotDate = new Date(slot.startTime);
-        const doctor = doctors.find(d => d._id === slot.doctorId);
-        
+        const doctor = doctors.find((d) => d._id === slot.doctorId);
+
         if (!doctor || slot.availableSeats === 0) return;
 
         let score = 0;
@@ -73,7 +73,7 @@ function SmartRecommendations() {
         }
 
         // Factor 5: Doctor specialty diversity (if multiple specialties)
-        const specialtyCount = new Set(doctors.map(d => d.specialty)).size;
+        const specialtyCount = new Set(doctors.map((d) => d.specialty)).size;
         if (specialtyCount > 1) {
           score += 10;
         }
@@ -113,7 +113,7 @@ function SmartRecommendations() {
         <h3>Smart Recommendations</h3>
         <span className="recommendations-subtitle">Best slots for you</span>
       </div>
-      
+
       <div className="recommendations-grid">
         {recommendations.map((rec, index) => (
           <div
@@ -121,9 +121,7 @@ function SmartRecommendations() {
             className="recommendation-card"
             onClick={() => navigate(`/booking/${rec.slot._id}`)}
           >
-            <div className="recommendation-badge">
-              #{index + 1} Choice
-            </div>
+            <div className="recommendation-badge">#{index + 1} Choice</div>
             <div className="recommendation-score">
               <span className="score-value">{Math.round(rec.score)}</span>
               <span className="score-label">Match Score</span>
@@ -142,7 +140,9 @@ function SmartRecommendations() {
               </div>
               <div className="recommendation-reason">{rec.reason}</div>
               <div className="recommendation-seats">
-                <span className={`seat-badge ${rec.slot.availableSeats > 0 ? 'available' : 'full'}`}>
+                <span
+                  className={`seat-badge ${rec.slot.availableSeats > 0 ? 'available' : 'full'}`}
+                >
                   {rec.slot.availableSeats} seats available
                 </span>
               </div>
@@ -158,4 +158,3 @@ function SmartRecommendations() {
 }
 
 export default SmartRecommendations;
-

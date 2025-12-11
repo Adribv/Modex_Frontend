@@ -115,7 +115,7 @@ function Admin() {
   return (
     <div>
       <StatsDashboard />
-      
+
       <div className="section-header">
         <h2>Admin Panel</h2>
         <p className="section-subtitle">Manage doctors and appointment slots</p>
@@ -150,9 +150,7 @@ function Admin() {
                   type="text"
                   id="doctor-name"
                   value={doctorForm.name}
-                  onChange={(e) =>
-                    setDoctorForm({ ...doctorForm, name: e.target.value })
-                  }
+                  onChange={(e) => setDoctorForm({ ...doctorForm, name: e.target.value })}
                   required
                   placeholder="Dr. John Doe"
                 />
@@ -164,9 +162,7 @@ function Admin() {
                   type="text"
                   id="doctor-specialty"
                   value={doctorForm.specialty}
-                  onChange={(e) =>
-                    setDoctorForm({ ...doctorForm, specialty: e.target.value })
-                  }
+                  onChange={(e) => setDoctorForm({ ...doctorForm, specialty: e.target.value })}
                   required
                   placeholder="Cardiology, Pediatrics, etc."
                 />
@@ -177,9 +173,7 @@ function Admin() {
                 <textarea
                   id="doctor-profile"
                   value={doctorForm.profile}
-                  onChange={(e) =>
-                    setDoctorForm({ ...doctorForm, profile: e.target.value })
-                  }
+                  onChange={(e) => setDoctorForm({ ...doctorForm, profile: e.target.value })}
                   rows={4}
                   placeholder="Brief description of doctor's qualifications and experience..."
                 />
@@ -206,7 +200,13 @@ function Admin() {
                     <h4>{doctor.name}</h4>
                     <span className="specialty-badge">{doctor.specialty}</span>
                     {doctor.profile && (
-                      <p style={{ marginTop: '1rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+                      <p
+                        style={{
+                          marginTop: '1rem',
+                          color: 'var(--text-secondary)',
+                          lineHeight: '1.6',
+                        }}
+                      >
                         {doctor.profile}
                       </p>
                     )}
@@ -228,9 +228,7 @@ function Admin() {
                 <select
                   id="slot-doctor"
                   value={slotForm.doctorId}
-                  onChange={(e) =>
-                    setSlotForm({ ...slotForm, doctorId: e.target.value })
-                  }
+                  onChange={(e) => setSlotForm({ ...slotForm, doctorId: e.target.value })}
                   required
                 >
                   <option value="">Select a doctor</option>
@@ -248,9 +246,7 @@ function Admin() {
                   type="datetime-local"
                   id="slot-start"
                   value={slotForm.startTime}
-                  onChange={(e) =>
-                    setSlotForm({ ...slotForm, startTime: e.target.value })
-                  }
+                  onChange={(e) => setSlotForm({ ...slotForm, startTime: e.target.value })}
                   required
                   min={getCurrentDateTime()}
                 />
@@ -262,9 +258,7 @@ function Admin() {
                   type="datetime-local"
                   id="slot-end"
                   value={slotForm.endTime}
-                  onChange={(e) =>
-                    setSlotForm({ ...slotForm, endTime: e.target.value })
-                  }
+                  onChange={(e) => setSlotForm({ ...slotForm, endTime: e.target.value })}
                   required
                   min={slotForm.startTime || getCurrentDateTime()}
                 />
@@ -276,9 +270,7 @@ function Admin() {
                   type="number"
                   id="slot-seats"
                   value={slotForm.totalSeats}
-                  onChange={(e) =>
-                    setSlotForm({ ...slotForm, totalSeats: e.target.value })
-                  }
+                  onChange={(e) => setSlotForm({ ...slotForm, totalSeats: e.target.value })}
                   required
                   min="1"
                 />
@@ -303,28 +295,24 @@ function Admin() {
                   return (
                     <div
                       key={slot._id}
-                      className={`card slot-card ${
-                        slot.availableSeats > 0 ? 'available' : 'full'
-                      }`}
+                      className={`card slot-card ${slot.availableSeats > 0 ? 'available' : 'full'}`}
                     >
                       <h4>{doctor?.name || 'Unknown Doctor'}</h4>
-                      <span className="specialty-badge">
-                        {doctor?.specialty || 'N/A'}
-                      </span>
+                      <span className="specialty-badge">{doctor?.specialty || 'N/A'}</span>
                       <div style={{ marginTop: '1rem', lineHeight: '1.8', fontSize: '0.875rem' }}>
                         <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                          <strong style={{ color: 'var(--text-primary)' }}>Start:</strong> {formatDate(slot.startTime)}
+                          <strong style={{ color: 'var(--text-primary)' }}>Start:</strong>{' '}
+                          {formatDate(slot.startTime)}
                         </p>
                         <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                          <strong style={{ color: 'var(--text-primary)' }}>End:</strong> {formatDate(slot.endTime)}
+                          <strong style={{ color: 'var(--text-primary)' }}>End:</strong>{' '}
+                          {formatDate(slot.endTime)}
                         </p>
                         <p style={{ marginTop: '0.75rem' }}>
                           <strong>Seats:</strong>{' '}
                           <span
                             className={`badge ${
-                              slot.availableSeats > 0
-                                ? 'badge-success'
-                                : 'badge-danger'
+                              slot.availableSeats > 0 ? 'badge-success' : 'badge-danger'
                             }`}
                           >
                             {slot.availableSeats} / {slot.totalSeats}
@@ -344,4 +332,3 @@ function Admin() {
 }
 
 export default Admin;
-

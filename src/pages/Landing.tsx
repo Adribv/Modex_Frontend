@@ -14,9 +14,7 @@ function Landing() {
 
   const loadData = async () => {
     try {
-      const [doctorsData] = await Promise.all([
-        api.getDoctors(),
-      ]);
+      const [doctorsData] = await Promise.all([api.getDoctors()]);
       setDoctors(doctorsData);
       setStats({
         totalDoctors: doctorsData.length,
@@ -41,8 +39,8 @@ function Landing() {
               <span className="title-line">In Seconds</span>
             </h1>
             <p className="hero-subtitle">
-              Connect with expert healthcare professionals from the comfort of your home.
-              Fast, secure, and convenient telemedicine appointments.
+              Connect with expert healthcare professionals from the comfort of your home. Fast,
+              secure, and convenient telemedicine appointments.
             </p>
             <div className="hero-buttons">
               <button className="btn btn-primary btn-large" onClick={() => navigate('/calendar')}>
@@ -107,12 +105,17 @@ function Landing() {
           <div className="feature-card">
             <div className="feature-icon">🔒</div>
             <h3>Secure & Private</h3>
-            <p>Your medical data is encrypted and protected with industry-standard security measures.</p>
+            <p>
+              Your medical data is encrypted and protected with industry-standard security measures.
+            </p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">⚡</div>
             <h3>Lightning Fast</h3>
-            <p>Book appointments in seconds with our optimized booking system and real-time availability.</p>
+            <p>
+              Book appointments in seconds with our optimized booking system and real-time
+              availability.
+            </p>
           </div>
           <div className="feature-card">
             <div className="feature-icon">🎯</div>
@@ -153,10 +156,7 @@ function Landing() {
                 {doctor.profile && (
                   <p className="doctor-preview-profile">{doctor.profile.substring(0, 100)}...</p>
                 )}
-                <button
-                  className="btn btn-outline"
-                  onClick={() => navigate('/doctors')}
-                >
+                <button className="btn btn-outline" onClick={() => navigate('/doctors')}>
                   View Profile
                 </button>
               </div>
@@ -185,4 +185,3 @@ function Landing() {
 }
 
 export default Landing;
-

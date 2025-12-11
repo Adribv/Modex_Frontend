@@ -68,20 +68,21 @@ function Home() {
   }
 
   const filteredDoctors = doctors.filter((doctor) => {
-    const matchesSearch = doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSpecialty = !filterSpecialty || doctor.specialty === filterSpecialty;
     return matchesSearch && matchesSpecialty;
   });
 
-  const specialties = Array.from(new Set(doctors.map(d => d.specialty)));
+  const specialties = Array.from(new Set(doctors.map((d) => d.specialty)));
 
   return (
     <div>
       <StatsDashboard />
-      
+
       <SmartRecommendations />
-      
+
       <div className="section-header">
         <h2>Available Doctors</h2>
         <p className="section-subtitle">Select a doctor to view available appointment slots</p>
@@ -128,7 +129,14 @@ function Home() {
             <h3>{doctor.name}</h3>
             <span className="specialty-badge">{doctor.specialty}</span>
             {doctor.profile && (
-              <p style={{ marginTop: '1rem', color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '0.875rem' }}>
+              <p
+                style={{
+                  marginTop: '1rem',
+                  color: 'var(--text-secondary)',
+                  lineHeight: '1.6',
+                  fontSize: '0.875rem',
+                }}
+              >
                 {doctor.profile}
               </p>
             )}
@@ -147,7 +155,9 @@ function Home() {
         <div className="card" style={{ marginTop: '2rem', animation: 'slideIn 0.5s ease' }}>
           <div className="section-header">
             <h2>Available Slots</h2>
-            <p className="section-subtitle">Dr. {selectedDoctor.name} - {selectedDoctor.specialty}</p>
+            <p className="section-subtitle">
+              Dr. {selectedDoctor.name} - {selectedDoctor.specialty}
+            </p>
           </div>
           {loading ? (
             <div className="loading">Loading slots</div>
@@ -160,25 +170,23 @@ function Home() {
               {slots.map((slot) => (
                 <div
                   key={slot._id}
-                  className={`card slot-card ${
-                    slot.availableSeats > 0 ? 'available' : 'full'
-                  }`}
+                  className={`card slot-card ${slot.availableSeats > 0 ? 'available' : 'full'}`}
                 >
                   <h3>Appointment Slot</h3>
                   <div style={{ marginTop: '1rem', lineHeight: '1.8', fontSize: '0.875rem' }}>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                      <strong style={{ color: 'var(--text-primary)' }}>Start:</strong> {formatDate(slot.startTime)}
+                      <strong style={{ color: 'var(--text-primary)' }}>Start:</strong>{' '}
+                      {formatDate(slot.startTime)}
                     </p>
                     <p style={{ color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                      <strong style={{ color: 'var(--text-primary)' }}>End:</strong> {formatDate(slot.endTime)}
+                      <strong style={{ color: 'var(--text-primary)' }}>End:</strong>{' '}
+                      {formatDate(slot.endTime)}
                     </p>
                     <p style={{ marginTop: '0.75rem' }}>
                       <strong>Seats:</strong>{' '}
                       <span
                         className={`badge ${
-                          slot.availableSeats > 0
-                            ? 'badge-success'
-                            : 'badge-danger'
+                          slot.availableSeats > 0 ? 'badge-success' : 'badge-danger'
                         }`}
                       >
                         {slot.availableSeats} / {slot.totalSeats}
@@ -213,4 +221,3 @@ function Home() {
 }
 
 export default Home;
-
